@@ -7,7 +7,6 @@
 // fasti sem segir til um hve marga leiki eigi að spila
 const GAMES = 10;
 let r = 0;
-
 /**
  * Birtir upplýsingar um leik og eftir að notandi samþykkir spilar fyrsta leik
  * með kalli í play().
@@ -18,9 +17,6 @@ function start() {
 	do{
 		play()
 	}while(confirm(`Spila aftur ?`));
-
-
-
 }
 
 /**
@@ -34,12 +30,28 @@ function start() {
  * upplsýingar um niðurstöður.
  *
  */
+ let enda = null;
+ let byrja = null;
+ let time = null;
+
 function play() {
+	byrja = new Date();
 	for(let i = 0; i < GAMES; i++){
-		if(ask()){
+		let x = ask();
+		if(x){
 			r++;
 		}
+		if(!x){
+			return;
+		}
 	}
+	 enda = new Date();
+	time = (enda - byrja)/1000;
+
+
+
+	alert(`Þú hefur svarað ` + r + `/` + GAMES + ` dæmum rétt á ` + time + `.` + `\n\nMeðalrétt svör á sekúndum eru ` + r/time + `.`);
+
 	
 }
 
@@ -90,13 +102,19 @@ function ask() {
 		spurn = "Hvað er " + num2 + " / " + num1 + " ?";
 	}
 
-	let svar = prompt(spurn);
+	let svar = Number(prompt(spurn));
 	if(svar == sum) {
 		return true;
+	}
+	if(svar == null){
+		return null;
+
 	}
 	else{
 		false;
 	}
+	
+
 
 
 }
